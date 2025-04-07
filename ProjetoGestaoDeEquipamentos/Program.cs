@@ -1,4 +1,6 @@
-﻿namespace ProjetoGestaoDeEquipamentos
+﻿using ProjetoGestaoDeEquipamentos.moduloEquipamentos;
+
+namespace ProjetoGestaoDeEquipamentos
 {
     internal class Program
     {

@@ -1,9 +1,7 @@
-﻿
-namespace ProjetoGestaoDeEquipamentos        /*• Deve ter um identificador único (Id);
-• Deve ter a título do chamado;
-• Deve ter a descrição do chamado;
-• Deve ter um equipamento;
-• Deve ter uma data de abertura;*/
+﻿using ProjetoGestaoDeEquipamentos.moduloEquipamentos;
+
+namespace ProjetoGestaoDeEquipamentos.ModuloChamado      
+
 {
     public class Chamado
     {
