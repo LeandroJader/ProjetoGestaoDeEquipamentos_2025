@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
+namespace ProjetoGestaoDeEquipamentos;
 
-namespace ProjetoGestaoDeEquipamentos
-{
     public class TelaEquipamentos
     {
+        public Chamado[] EquipamentosComChamados = new Chamado[100];
+       public  int contadorEquipamentosChamados = 0;
+
         public Equipamento[] equipamentos = new Equipamento[100];
         public int contadorEquipamentos = 0;
         public string ExibirMenu()
@@ -54,6 +51,7 @@ namespace ProjetoGestaoDeEquipamentos
 
             Equipamento novoequipamento = new Equipamento(nome, fabricante, precoAquisicao, dataFabricacao);
             equipamentos[contadorEquipamentos++] = novoequipamento;
+            novoequipamento.Id = GeradorDeId.GerarIdEquipamentos();
         }
         public void EditarEquipamentos()
         {
@@ -85,6 +83,8 @@ namespace ProjetoGestaoDeEquipamentos
             DateTime dataFabricacao = Convert.ToDateTime(Console.ReadLine());
 
             Equipamento novoequipamento = new Equipamento(nome, fabricante, precoAquisicao, dataFabricacao);
+            novoequipamento.Id = GeradorDeId.GerarIdEquipamentos();
+
 
             bool conseguiuEditar = false;
 
@@ -107,7 +107,7 @@ namespace ProjetoGestaoDeEquipamentos
                     Console.WriteLine("ouve um erro durante a edição de um registro");
                 return;
                 }
-            Console.WriteLine("O equipamento foi editado co sucesso");
+            Console.WriteLine("O equipamento foi editado com sucesso");
 
             
         }
@@ -186,11 +186,68 @@ namespace ProjetoGestaoDeEquipamentos
                  "{0,-10} | {1,-15} | {2,-11} | {3,-10}  | {4, -13} |{5, 10}",
                   e.Id, e.Nome, e.ObterNumeroDeSerie(), e.Fabricante, e.PrecoAquisicao.ToString("c2"), e.DataFabricacao.ToShortTimeString()
                   );
-                Console.WriteLine("precione Enter para prosseguir");
+                Console.WriteLine("pressione Enter para prosseguir");
             }
-            
+            Console.ReadLine();
         }
 
 
+
+        public void RegistrarChamado()
+        {
+            Console.WriteLine("Informe o Titulo deste chamado");
+            string titulo = Console.ReadLine();
+
+            Console.WriteLine("Informe a descrição deste chamado");
+            string descricaoChamado = Console.ReadLine();
+
+            Console.WriteLine("informe a data de abertura deste chamado (dd/mm/yyyy)");
+            DateTime horaAberturaChamado = Convert.ToDateTime(Console.ReadLine());
+
+            Console.WriteLine("Informe o Id do aparelho que seseja abrir um chamado");
+            int IdSelecionado = Convert.ToInt32(Console.ReadLine());
+
+        Equipamento EquipamentoSelecionado = null;
+        bool consegiuRegistrar = false;
+
+            for (int i = 0; i< equipamentos.Length; i++)
+            {
+               if (equipamentos[i] != null && equipamentos[i].Id==IdSelecionado )
+               {
+                EquipamentoSelecionado = equipamentos[i];
+                Chamado EquipamentoComChamado = new Chamado(titulo, descricaoChamado, EquipamentoSelecionado, horaAberturaChamado);
+                EquipamentosComChamados[contadorEquipamentosChamados++] = EquipamentoComChamado;
+                consegiuRegistrar = true;
+                break;
+                }
+                
+
+            }
+
+
+
+        }
+    public void VizualizarEquipamentosComChamados()
+    {
+        for (int i = 0; i < contadorEquipamentosChamados; i++)
+        {
+            if (EquipamentosComChamados[i] != null)
+            {
+
+                
+                Console.WriteLine(EquipamentosComChamados[i].Equipamento.Nome);
+                Console.WriteLine(EquipamentosComChamados[i].Equipamento.Fabricante);
+                Console.WriteLine(EquipamentosComChamados[i].Equipamento.PrecoAquisicao);
+                Console.WriteLine(EquipamentosComChamados[i].Equipamento.DataFabricacao);
+             
+
+                Console.ReadLine();
+            }
+        }
     }
+
+
+
+
 }
+

@@ -42,7 +42,18 @@
                         telaEquipamento.VizualizarEquipamentos(true);
                         break;
 
+                        case "5":
+                        Console.Clear();
+                        telaEquipamento.RegistrarChamado();
+                        break;
 
+
+                    case "6":
+                        Console.Clear();
+                        telaEquipamento.VizualizarEquipamentosComChamados();
+                        break;
+
+                        
 
                     default:
                         Console.WriteLine("saindo do programa");
