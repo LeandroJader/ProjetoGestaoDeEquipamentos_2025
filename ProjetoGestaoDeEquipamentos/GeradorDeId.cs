@@ -15,7 +15,13 @@ namespace ProjetoGestaoDeEquipamentos;
 
         return IdEquipamentos;
     }
+    public static int GerarIdChamados()
+    {
+        int idchamados = 0;
+        idchamados++;
 
+        return idchamados;
+    }
    
 
 

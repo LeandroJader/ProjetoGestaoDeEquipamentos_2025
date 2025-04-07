@@ -21,6 +21,8 @@ namespace ProjetoGestaoDeEquipamentos;
             Console.WriteLine("1- Cadastro de equipamenttos");     
             Console.WriteLine("2- Editar Equipamentos");
             Console.WriteLine("4- vizualização de equipamentos");
+            Console.WriteLine("5- para registrar um chamado");
+            Console.WriteLine("6- vizualizar Equipamentos Com Chamados ");
             Console.WriteLine();
             Console.WriteLine("digite uma operação válida");
             string OpcaoEscolhida = Console.ReadLine();
@@ -195,6 +197,8 @@ namespace ProjetoGestaoDeEquipamentos;
 
         public void RegistrarChamado()
         {
+        int idChamados = GeradorDeId.GerarIdChamados();
+
             Console.WriteLine("Informe o Titulo deste chamado");
             string titulo = Console.ReadLine();
 
@@ -215,7 +219,7 @@ namespace ProjetoGestaoDeEquipamentos;
                if (equipamentos[i] != null && equipamentos[i].Id==IdSelecionado )
                {
                 EquipamentoSelecionado = equipamentos[i];
-                Chamado EquipamentoComChamado = new Chamado(titulo, descricaoChamado, EquipamentoSelecionado, horaAberturaChamado);
+                Chamado EquipamentoComChamado = new Chamado(idChamados,titulo, descricaoChamado, EquipamentoSelecionado, horaAberturaChamado);
                 EquipamentosComChamados[contadorEquipamentosChamados++] = EquipamentoComChamado;
                 consegiuRegistrar = true;
                 break;
@@ -229,23 +233,74 @@ namespace ProjetoGestaoDeEquipamentos;
         }
     public void VizualizarEquipamentosComChamados()
     {
+
+        Console.WriteLine("-----------------------");
+        Console.WriteLine("gestão de Chamados");
+        Console.WriteLine("-----------------------");
+
+        Console.WriteLine("-----------------------");
+        Console.WriteLine("vizualizar equipamentos Com Chamados Abertos ");
+        Console.WriteLine("-----------------------");
+        Console.WriteLine();
+        Console.WriteLine();
+
+
+
         for (int i = 0; i < contadorEquipamentosChamados; i++)
         {
+
+
+            Console.WriteLine(EquipamentosComChamados[i].Equipamento.Nome);
+
+
+
             if (EquipamentosComChamados[i] != null)
             {
-
                 
-                Console.WriteLine(EquipamentosComChamados[i].Equipamento.Nome);
-                Console.WriteLine(EquipamentosComChamados[i].Equipamento.Fabricante);
-                Console.WriteLine(EquipamentosComChamados[i].Equipamento.PrecoAquisicao);
-                Console.WriteLine(EquipamentosComChamados[i].Equipamento.DataFabricacao);
-             
+
+                Chamado chamado = EquipamentosComChamados[i];
+
+                if (chamado != null && chamado.Equipamento != null) {
+                   
+                    
+                    Equipamento e = chamado.Equipamento;
+            Console.WriteLine($"titulo do chamado:{EquipamentosComChamados[i].TituloChamdo}");
+                    Console.WriteLine();
+            Console.WriteLine($"Equipamento com chamado aberto: {EquipamentosComChamados[i].TituloChamdo}");
+
+                    Console.WriteLine
+              (
+                  "{0,-10} | {1,-15} | {2,-11} | {3,-10}  | {4, -13} |{5, 10}",
+                  "id", "nome", "num. serie", "fabricante", "preço", "data de fabricação"
+                  );
+
+                    Console.WriteLine
+                   (
+                    "{0,-10} | {1,-15} | {2,-11} | {3,-10}  | {4, -13} |{5, 10}",
+                    e.Id, e.Nome, e.ObterNumeroDeSerie(), e.Fabricante, e.PrecoAquisicao, e.DataFabricacao
+                     );
+    }
+                Console.WriteLine();
+                    Console.WriteLine($"descrição do chamado{EquipamentosComChamados[i].DescricaoChamado}"); ;
+
+        
+                DateTime DataAtual = DateTime.Now;
+
+                DateTime DataAberturaChamado = EquipamentosComChamados[i].DataAberturaChamado;
+
+                TimeSpan diferanca = DataAtual.Subtract(DataAberturaChamado);
+
+                Console.WriteLine($"O chamado esta aberto há {diferanca} diaas ");
+
+            }
+
+        }
 
                 Console.ReadLine();
-            }
-        }
     }
 
+
+    
 
 
 

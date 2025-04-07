@@ -15,9 +15,9 @@ namespace ProjetoGestaoDeEquipamentos        /*• Deve ter um identificador ún
         public DateTime DataAberturaChamado;
        
 
-        public Chamado(string titulochamado, string descricaoChamado,Equipamento equipamento, DateTime dataAberturaChamado)
+        public Chamado(int id,string titulochamado, string descricaoChamado,Equipamento equipamento, DateTime dataAberturaChamado)
         {
-        
+            Id = id;
             TituloChamdo = titulochamado;
             DescricaoChamado = descricaoChamado;
             Equipamento = equipamento;
