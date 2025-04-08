@@ -1,6 +1,7 @@
 ﻿using ProjetoGestaoDeEquipamentos.compartilhado;
 using ProjetoGestaoDeEquipamentos.ModuloChamado;
 using ProjetoGestaoDeEquipamentos.moduloEquipamentos;
+using ProjetoGestaoDeEquipamentos.ModuloFabricantes;
 
 namespace ProjetoGestaoDeEquipamentos
 {
@@ -8,6 +9,9 @@ namespace ProjetoGestaoDeEquipamentos
     {
         static void Main(string[] args)
         {
+
+            TelaFabricante telafabricante = new TelaFabricante();
+
             TelaEquipamento telaEquipamento = new TelaEquipamento();
 
             RepositorioEquipamento repositorioEquipamento = telaEquipamento.repositorioEquipamento;
@@ -16,11 +20,39 @@ namespace ProjetoGestaoDeEquipamentos
 
             TelaPrincipal telaPrincipal = new TelaPrincipal();
 
+
+
+
+
             while (true)
             {
                 char opcaoPrincipal = telaPrincipal.ApresentarMenuPrincipal();
 
+
+
                 if (opcaoPrincipal == '1')
+                {
+                    char opcaoEscolhida = telafabricante.ApresentarMenu();
+
+                    switch (opcaoEscolhida)
+                    {
+                        case '1': telafabricante.CadastrarFabricante(); break;
+
+                        case '2': telafabricante.EditarFabricante(); break;
+
+                        case '3': telafabricante.ExcluirFabricante(); break;
+
+                        case '4': telafabricante.VizualizarFabricante(true); break;
+
+                        default: break;
+                    }
+                }
+
+
+
+
+
+                else if (opcaoPrincipal == '2')
                 {
                     char opcaoEscolhida = telaEquipamento.ApresentarMenu();
 
@@ -38,7 +70,7 @@ namespace ProjetoGestaoDeEquipamentos
                     }
                 }
 
-                else if (opcaoPrincipal == '2')
+                else if (opcaoPrincipal == '3')
                 {
                     char opcaoEscolhida = telaChamado.ApresentarMenu();
 
@@ -56,8 +88,16 @@ namespace ProjetoGestaoDeEquipamentos
                     }
                 }
 
+
+
+
+
+
+
+
                 Console.ReadLine();
             }
 
         }
     }
+}
