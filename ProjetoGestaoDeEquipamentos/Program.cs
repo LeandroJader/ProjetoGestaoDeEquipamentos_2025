@@ -1,67 +1,63 @@
-﻿using ProjetoGestaoDeEquipamentos.moduloEquipamentos;
+﻿using ProjetoGestaoDeEquipamentos.compartilhado;
+using ProjetoGestaoDeEquipamentos.ModuloChamado;
+using ProjetoGestaoDeEquipamentos.moduloEquipamentos;
 
 namespace ProjetoGestaoDeEquipamentos
 {
-    internal class Program
+    class Program
     {
         static void Main(string[] args)
-
-        
         {
-            TelaEquipamentos telaEquipamento = new TelaEquipamentos();
-           
-            while (true) {
-           
-               string OpcaoEscolhida= telaEquipamento.ExibirMenu();
-                switch (OpcaoEscolhida)
+            TelaEquipamento telaEquipamento = new TelaEquipamento();
 
+            RepositorioEquipamento repositorioEquipamento = telaEquipamento.repositorioEquipamento;
 
-                //gestão de equipamentos
+            TelaChamado telaChamado = new TelaChamado(repositorioEquipamento);
+
+            TelaPrincipal telaPrincipal = new TelaPrincipal();
+
+            while (true)
+            {
+                char opcaoPrincipal = telaPrincipal.ApresentarMenuPrincipal();
+
+                if (opcaoPrincipal == '1')
                 {
-                    case "1":
-                        Console.Clear();
-                        telaEquipamento.cadastrarEquipamentos();
+                    char opcaoEscolhida = telaEquipamento.ApresentarMenu();
 
+                    switch (opcaoEscolhida)
+                    {
+                        case '1': telaEquipamento.CadastrarEquipamento(); break;
 
-                        break;
+                        case '2': telaEquipamento.EditarEquipamento(); break;
 
-                    case "2":
-                        Console.Clear();
+                        case '3': telaEquipamento.ExcluirEquipamento(); break;
 
-                        telaEquipamento.EditarEquipamentos();
+                        case '4': telaEquipamento.VisualizarEquipamentos(true); break;
 
-                        break;
-
-                    case "3":
-                        Console.Clear();
-                        telaEquipamento.ExcluirEquipamentos();
-
-                        break;
-
-
-                    case "4":
-                        Console.Clear();
-                        telaEquipamento.VizualizarEquipamentos(true);
-                        break;
-
-                        case "5":
-                        Console.Clear();
-                        telaEquipamento.RegistrarChamado();
-                        break;
-
-
-                    case "6":
-                        Console.Clear();
-                        telaEquipamento.VizualizarEquipamentosComChamados();
-                        break;
-
-                        
-
-                    default:
-                        Console.WriteLine("saindo do programa");
-                        break;
+                        default: break;
+                    }
                 }
+
+                else if (opcaoPrincipal == '2')
+                {
+                    char opcaoEscolhida = telaChamado.ApresentarMenu();
+
+                    switch (opcaoEscolhida)
+                    {
+                        case '1': telaChamado.CadastrarChamado(); break;
+
+                        case '2': telaChamado.EditarChamado(); break;
+
+                        case '3': telaChamado.ExcluirChamado(); break;
+
+                        case '4': telaChamado.VisualizarChamados(true); break;
+
+                        default: break;
+                    }
+                }
+
+                Console.ReadLine();
             }
+
         }
     }
-}

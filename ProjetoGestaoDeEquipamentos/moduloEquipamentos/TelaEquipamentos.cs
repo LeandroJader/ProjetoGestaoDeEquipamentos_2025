@@ -3,332 +3,168 @@ using ProjetoGestaoDeEquipamentos.ModuloChamado;
 
 namespace ProjetoGestaoDeEquipamentos.moduloEquipamentos;
 
-public class TelaEquipamentos
+public class TelaEquipamento
 {
-    public Chamado[] EquipamentosComChamados = new Chamado[100];
-    public int contadorEquipamentosChamados = 0;
+    public RepositorioEquipamento repositorioEquipamento;
 
-    public Equipamento[] equipamentos = new Equipamento[100];
-    public int contadorEquipamentos = 0;
-    public string ExibirMenu()
-
+    public TelaEquipamento()
     {
-        Console.Clear();
-        Console.WriteLine("----------------------");
-        Console.WriteLine("gestão de equipamentos");
-
-        Console.WriteLine("Escolha a operação desejada");
-        Console.WriteLine("-----------------------------");
-
-        Console.WriteLine("1- Cadastro de equipamenttos");
-        Console.WriteLine("2- Editar Equipamentos");
-        Console.WriteLine("4- vizualização de equipamentos");
-        Console.WriteLine("5- para registrar um chamado");
-        Console.WriteLine("6- vizualizar Equipamentos Com Chamados ");
-        Console.WriteLine();
-        Console.WriteLine("digite uma operação válida");
-        string OpcaoEscolhida = Console.ReadLine();
-        return OpcaoEscolhida;
+        repositorioEquipamento = new RepositorioEquipamento();
     }
 
-    public void cadastrarEquipamentos()
+    public char ApresentarMenu()
     {
         Console.Clear();
-        Console.WriteLine("----------------------");
-        Console.WriteLine("gestão de equipamentos");
-        Console.WriteLine("-----------------------");
-        Console.WriteLine("cadastrando equipamento");
-        Console.WriteLine("-----------------------");
+        Console.WriteLine("--------------------------------------------");
+        Console.WriteLine("Gestão de Equipamentos");
+        Console.WriteLine("--------------------------------------------");
 
+        Console.WriteLine("Escolha a operação desejada:");
+        Console.WriteLine("1 - Cadastro de Equipamento");
+        Console.WriteLine("2 - Edição de Equipamento");
+        Console.WriteLine("3 - Exclusão de Equipamento");
+        Console.WriteLine("4 - Visualização de Equipamentos");
+        Console.WriteLine("--------------------------------------------");
 
-        Console.WriteLine("Digite o nome do equipamento");
-        string nome = Console.ReadLine();
+        Console.Write("Digite um opção válida: ");
+        char opcaoEscolhida = Console.ReadLine()[0];
 
-        Console.WriteLine("Digite o nome da Fabricante do equipamento");
-        string fabricante = Console.ReadLine();
-
-        Console.WriteLine("Digite o preço de aquisição do equipamento");
-        decimal precoAquisicao = Convert.ToDecimal(Console.ReadLine());
-
-        Console.WriteLine("digite a data de fabricação do equipamento: (dd/mm/yyyy)");
-        DateTime dataFabricacao = Convert.ToDateTime(Console.ReadLine());
-
-        Equipamento novoequipamento = new Equipamento(nome, fabricante, precoAquisicao, dataFabricacao);
-        equipamentos[contadorEquipamentos++] = novoequipamento;
-        novoequipamento.Id = GeradorDeId.GerarIdEquipamentos();
+        return opcaoEscolhida;
     }
-    public void EditarEquipamentos()
+
+    public void CadastrarEquipamento()
     {
-
         Console.Clear();
-        Console.Write("======================");
-        Console.WriteLine("gestão de equipamentos");
+        Console.WriteLine("--------------------------------------------");
+        Console.WriteLine("Gestão de Equipamentos");
+        Console.WriteLine("--------------------------------------------");
 
-        Console.Write("----------------------------");
-        Console.WriteLine("Editando Equipamentos");
-        Console.WriteLine("----------------------------");
+        Console.WriteLine("Cadastrando Equipamento...");
+        Console.WriteLine("--------------------------------------------");
+
         Console.WriteLine();
-        VizualizarEquipamentos(false);
 
-        Console.Write("Digite o Id do produto que deseja selecionar");
-        int IdSelecionado = Convert.ToInt32(Console.ReadLine());
-
-
-        Console.Write("Digite o nome do equipamento");
+        Console.Write("Digite o nome do equipamento: ");
         string nome = Console.ReadLine();
 
-        Console.Write("Digite o nome da Fabricante do equipamento");
+        Console.Write("Digite o nome do fabricante equipamento: ");
         string fabricante = Console.ReadLine();
 
-        Console.Write("Digite o preço de aquisição do equipamento");
+        Console.Write("Digite o preço de aquisição R$ ");
         decimal precoAquisicao = Convert.ToDecimal(Console.ReadLine());
 
-        Console.Write("digite a data de fabricação do equipamento: (dd/mm/yyyy)");
+        Console.Write("Digite a data de fabricação do equipamento (dd/MM/yyyy) ");
         DateTime dataFabricacao = Convert.ToDateTime(Console.ReadLine());
 
-        Equipamento novoequipamento = new Equipamento(nome, fabricante, precoAquisicao, dataFabricacao);
-        novoequipamento.Id = GeradorDeId.GerarIdEquipamentos();
+        Equipamento novoEquipamento = new Equipamento(nome, fabricante, precoAquisicao, dataFabricacao);
 
+        repositorioEquipamento.CadastrarEquipamento(novoEquipamento);
+    }
 
-        bool conseguiuEditar = false;
+    public void EditarEquipamento()
+    {
+        Console.Clear();
+        Console.WriteLine("--------------------------------------------");
+        Console.WriteLine("Gestão de Equipamentos");
+        Console.WriteLine("--------------------------------------------");
 
-        for (int i = 0; i < equipamentos.Length; i++)
+        Console.WriteLine("Editando Equipamento...");
+        Console.WriteLine("--------------------------------------------");
+
+        VisualizarEquipamentos(false);
+
+        Console.Write("Digite o ID do registro que deseja selecionar: ");
+        int idSelecionado = Convert.ToInt32(Console.ReadLine());
+
+        Console.WriteLine();
+
+        Console.Write("Digite o nome do equipamento: ");
+        string nome = Console.ReadLine();
+
+        Console.Write("Digite o nome do fabricante equipamento: ");
+        string fabricante = Console.ReadLine();
+
+        Console.Write("Digite o preço de aquisição R$ ");
+        decimal precoAquisicao = Convert.ToDecimal(Console.ReadLine());
+
+        Console.Write("Digite a data de fabricação do equipamento (dd/MM/yyyy) ");
+        DateTime dataFabricacao = Convert.ToDateTime(Console.ReadLine());
+
+        Equipamento novoEquipamento = new Equipamento(nome, fabricante, precoAquisicao, dataFabricacao);
+
+        bool conseguiuEditar = repositorioEquipamento.EditarEquipamento(idSelecionado, novoEquipamento);
+
+        if (!conseguiuEditar)
         {
-            if (equipamentos[i] == null) continue;
-
-            else if (equipamentos[i].Id == IdSelecionado)
-            {
-                equipamentos[i].Nome = novoequipamento.Nome;
-                equipamentos[i].Fabricante = novoequipamento.Fabricante;
-                equipamentos[i].PrecoAquisicao = novoequipamento.PrecoAquisicao;
-                equipamentos[i].DataFabricacao = novoequipamento.DataFabricacao;
-            }
-
-
-        }
-        if (conseguiuEditar)
-        {
-            Console.WriteLine("ouve um erro durante a edição de um registro");
+            Console.WriteLine("Houve um erro durante a edição de um registro...");
             return;
         }
-        Console.WriteLine("O equipamento foi editado com sucesso");
 
-
+        Console.WriteLine();
+        Console.WriteLine("O equipamento foi editado com sucesso!");
     }
 
-    public void ExcluirEquipamentos()
-    {
-
-        Console.WriteLine("----------------------");
-        Console.WriteLine("Excluir Equipamentos");
-        Console.WriteLine("-----------------------");
-        Console.WriteLine("Excluindo Equioamentos");
-        Console.WriteLine("-----------------------");
-
-        VizualizarEquipamentos(false);
-
-        Console.Write("Digite o Id do produto que deseja selecionar");
-        int IdSelecionado = Convert.ToInt32(Console.ReadLine());
-
-
-        bool ConsegiuExcluir = false;
-
-        for (int i = 0; i < equipamentos.Length; i++)
-        {
-            if (equipamentos[i] == null) continue;
-
-            else if (equipamentos[i].Id == IdSelecionado)
-            {
-                equipamentos[i] = null;
-                ConsegiuExcluir = true;
-            }
-            if (!ConsegiuExcluir)
-            {
-                Console.WriteLine("Ouve um erro durante a exclusão do produto");
-
-            }
-
-
-        }
-        Console.WriteLine("O equipamento foi excluido com sucesso");
-        Console.ReadLine();
-    }
-    public void VizualizarEquipamentos(bool exibirTitulo)
+    public void ExcluirEquipamento()
     {
         Console.Clear();
-        if (exibirTitulo == true)
+        Console.WriteLine("--------------------------------------------");
+        Console.WriteLine("Gestão de Equipamentos");
+        Console.WriteLine("--------------------------------------------");
+
+        Console.WriteLine("Excluindo Equipamento...");
+        Console.WriteLine("--------------------------------------------");
+
+        VisualizarEquipamentos(false);
+
+        Console.Write("Digite o ID do registro que deseja selecionar: ");
+        int idSelecionado = Convert.ToInt32(Console.ReadLine());
+
+        bool conseguiuExcluir = repositorioEquipamento.ExcluirEquipamento(idSelecionado);
+
+        if (!conseguiuExcluir)
         {
-
-
-            Console.WriteLine("======================");
-            Console.WriteLine("gestão de equipamentos");
-            Console.WriteLine("======================");
-
-            Console.WriteLine("======================");
-            Console.WriteLine("vizualizar equipamentos");
-            Console.WriteLine("======================");
-            Console.WriteLine();
-            Console.WriteLine();
-
-
+            Console.WriteLine("Houve um erro durante a exclusão de um registro...");
+            return;
         }
-        Console.WriteLine
-            (
-             "{0,-10} | {1,-15} | {2,-11} | {3,-10}  | {4, -13} |{5, 10}",
-              "id", "nome", "num. serie", "fabricante", "preço", "data de fabricação"
-              );
 
+        Console.WriteLine();
+        Console.WriteLine("O equipamento foi excluído com sucesso!");
+    }
 
-
-        for (int i = 0; i < equipamentos.Length; i++)
+    public void VisualizarEquipamentos(bool exibirTitulo)
+    {
+        if (exibirTitulo)
         {
-            Equipamento e = equipamentos[i];
+            Console.Clear();
+            Console.WriteLine("--------------------------------------------");
+            Console.WriteLine("Gestão de Equipamentos");
+            Console.WriteLine("--------------------------------------------");
+
+            Console.WriteLine("Visualizando Equipamentos...");
+            Console.WriteLine("--------------------------------------------");
+        }
+
+        Console.WriteLine();
+
+        Console.WriteLine(
+            "{0, -10} | {1, -15} | {2, -11} | {3, -15} | {4, -15} | {5, -10}",
+            "Id", "Nome", "Num. Série", "Fabricante", "Preço", "Data de Fabricação"
+        );
+
+        Equipamento[] equipamentosCadastrados = repositorioEquipamento.SelecionarEquipamentos();
+
+        for (int i = 0; i < equipamentosCadastrados.Length; i++)
+        {
+            Equipamento e = equipamentosCadastrados[i];
 
             if (e == null) continue;
-            Console.WriteLine
-            (
-             "{0,-10} | {1,-15} | {2,-11} | {3,-10}  | {4, -13} |{5, 10}",
-              e.Id, e.Nome, e.ObterNumeroDeSerie(), e.Fabricante, e.PrecoAquisicao.ToString("c2"), e.DataFabricacao.ToShortTimeString()
-              );
-            Console.WriteLine("pressione Enter para prosseguir");
-        }
-        Console.ReadLine();
-    }
 
-
-    public void RegistrarChamado()
-    {
-        int idChamados = GeradorDeId.GerarIdChamados();
-
-        Console.WriteLine("Informe o Titulo deste chamado");
-        string titulo = Console.ReadLine();
-
-        Console.WriteLine("Informe a descrição deste chamado");
-        string descricaoChamado = Console.ReadLine();
-
-        Console.WriteLine("informe a data de abertura deste chamado (dd/mm/yyyy)");
-        DateTime horaAberturaChamado = Convert.ToDateTime(Console.ReadLine());
-
-        Console.WriteLine("Informe o Id do aparelho que seseja abrir um chamado");
-        int IdSelecionado = Convert.ToInt32(Console.ReadLine());
-
-        Equipamento EquipamentoSelecionado = null;
-        bool consegiuRegistrar = false;
-
-        for (int i = 0; i < equipamentos.Length; i++)
-        {
-            if (equipamentos[i] != null && equipamentos[i].Id == IdSelecionado)
-            {
-                EquipamentoSelecionado = equipamentos[i];
-                Chamado ChamadosAbertos = new Chamado(idChamados, titulo, descricaoChamado, EquipamentoSelecionado, horaAberturaChamado);
-                EquipamentosComChamados[contadorEquipamentosChamados++] = ChamadosAbertos;
-                consegiuRegistrar = true;
-                break;
-            }
-
-
+            Console.WriteLine(
+                "{0, -10} | {1, -15} | {2, -11} | {3, -15} | {4, -15} | {5, -10}",
+                e.Id, e.Nome, e.ObterNumeroSerie(), e.Fabricante, e.PrecoAquisicao.ToString("C2"), e.DataFabricacao.ToShortDateString()
+            );
         }
 
-
-
-    }
-    public void VizualizarEquipamentosComChamados()
-    {
-
-        Console.WriteLine("-----------------------");
-        Console.WriteLine("gestão de Chamados");
-        Console.WriteLine("-----------------------");
-
-        Console.WriteLine("-----------------------");
-        Console.WriteLine("vizualizar equipamentos Com Chamados Abertos ");
-        Console.WriteLine("-----------------------");
         Console.WriteLine();
-        Console.WriteLine();
-
-
-
-        for (int i = 0; i < contadorEquipamentosChamados; i++)
-        {
-
-
-            Console.WriteLine(EquipamentosComChamados[i].Equipamento.Nome);
-
-
-
-            if (EquipamentosComChamados[i] != null)
-            {
-
-
-                Chamado chamado = EquipamentosComChamados[i];
-
-                if (chamado != null && chamado.Equipamento != null)
-                {
-
-
-                    Equipamento e = chamado.Equipamento;
-                    Console.WriteLine($"titulo do chamado:{EquipamentosComChamados[i].TituloChamdo}");
-                    Console.WriteLine();
-                    Console.WriteLine($"Equipamento com chamado aberto: {EquipamentosComChamados[i].TituloChamdo}");
-
-                    Console.WriteLine
-              (
-                  "{0,-10} | {1,-15} | {2,-11} | {3,-10}  | {4, -13} |{5, 10}",
-                  "id", "nome", "num. serie", "fabricante", "preço", "data de fabricação"
-                  );
-
-                    Console.WriteLine
-                   (
-                    "{0,-10} | {1,-15} | {2,-11} | {3,-10}  | {4, -13} |{5, 10}",
-                    e.Id, e.Nome, e.ObterNumeroDeSerie(), e.Fabricante, e.PrecoAquisicao, e.DataFabricacao
-                     );
-                }
-                Console.WriteLine();
-                Console.WriteLine($"descrição do chamado{EquipamentosComChamados[i].DescricaoChamado}"); ;
-
-
-                DateTime DataAtual = DateTime.Now;
-
-                DateTime DataAberturaChamado = EquipamentosComChamados[i].DataAberturaChamado;
-
-                TimeSpan diferanca = DataAtual.Subtract(DataAberturaChamado);
-
-                Console.WriteLine($"O chamado esta aberto há {diferanca} diaas ");
-
-            }
-
-        }
-
-        Console.ReadLine();
     }
-
-
-    public void EditarChamados()
-    {
-        Console.WriteLine("informe o Id do chamado a ser editado");
-        int IdSelecionado = Convert.ToInt32(Console.ReadLine());
-
-        Console.Write("Digite o novo  Titulo do chamado");
-        string nome = Console.ReadLine();
-
-        Console.Write("Digite a nova descrição");
-        string descricao = Console.ReadLine();
-
-        Console.Write("informe o novo Id do produto do chamado ");
-
-
-        Console.Write("digite a data de Abertura Chamado (dd/mm/yyyy)");
-        DateTime dataFabricacao = Convert.ToDateTime(Console.ReadLine());
-
-        Chamado novoChamado = new Chamado(IdSelecionado, nome, descricao, NovoIdEquipamento, dataFabricacao);
-
-
-
-
-    }
-
-
-
-
-
 }
-

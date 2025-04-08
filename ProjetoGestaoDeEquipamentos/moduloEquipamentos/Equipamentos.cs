@@ -4,8 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ProjetoGestaoDeEquipamentos.moduloEquipamentos
-{
+namespace ProjetoGestaoDeEquipamentos.moduloEquipamentos;
+
     public class Equipamento
     {
         public int Id;
@@ -14,26 +14,18 @@ namespace ProjetoGestaoDeEquipamentos.moduloEquipamentos
         public decimal PrecoAquisicao;
         public DateTime DataFabricacao;
 
-
-
-
-        //construtor de equipamentos
-        public Equipamento(string nome, string fabricante, decimal precoaquisicao, DateTime datadefabricacao)
+        public Equipamento(string nome, string fabricante, decimal precoAquisicao, DateTime dataFabricacao)
         {
             Nome = nome;
             Fabricante = fabricante;
-            PrecoAquisicao = precoaquisicao;
-            DataFabricacao = datadefabricacao;
-
-
+            PrecoAquisicao = precoAquisicao;
+            DataFabricacao = dataFabricacao;
         }
-        // regra de negócio 
-        public string ObterNumeroDeSerie()
+
+        public string ObterNumeroSerie()
         {
-            string TresPrimeirosCaracteres = Nome.Substring(0,3).ToUpper(); // se os caracteres forem ABCDE ele comeca a contar do zero ate tres no caso ele vai retornar ABC
+            string tresPrimeirosCaracteres = Nome.Substring(0, 3).ToUpper();
 
-            return $"{TresPrimeirosCaracteres}-{Id}";
+            return $"{tresPrimeirosCaracteres}-{Id}";
         }
-
     }
-}

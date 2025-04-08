@@ -1,32 +1,28 @@
 ﻿using ProjetoGestaoDeEquipamentos.moduloEquipamentos;
 
-namespace ProjetoGestaoDeEquipamentos.ModuloChamado      
+namespace ProjetoGestaoDeEquipamentos.ModuloChamado;
 
+
+public class Chamado
 {
-    public class Chamado
+    public int Id;
+    public string Titulo;
+    public string Descricao;
+    public Equipamento Equipamento;
+    public DateTime DataAbertura;
+
+    public Chamado(string titulo, string descricao, Equipamento equipamento)
     {
-        public int Id;
-        public string TituloChamdo;
-        public string DescricaoChamado;
-        public Equipamento Equipamento;
-       
-        public DateTime DataAberturaChamado;
-       
+        Titulo = titulo;
+        Descricao = descricao;
+        Equipamento = equipamento;
+        DataAbertura = DateTime.Now;
+    }
 
-        public Chamado(int id,string titulochamado, string descricaoChamado,Equipamento equipamento, DateTime dataAberturaChamado)
-        {
-            Id = id;
-            TituloChamdo = titulochamado;
-            DescricaoChamado = descricaoChamado;
-            Equipamento = equipamento;
-            DataAberturaChamado = dataAberturaChamado;
-           
+    public int ObterTempoDecorrido()
+    {
+        TimeSpan diferencaTempo = DateTime.Now.Subtract(DataAbertura);
 
-        }
-
-  
-
-
-
+        return diferencaTempo.Days;
     }
 }

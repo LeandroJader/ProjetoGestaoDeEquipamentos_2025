@@ -1,28 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace ProjetoGestaoDeEquipamentos.compartilhado;
 
-namespace ProjetoGestaoDeEquipamentos.compartilhado;
+public static class GeradorIds
+{
+    public static int IdEquipamentos = 0;
+    public static int IdChamados = 0;
 
-   public static class GeradorDeId
-    {
-        public static int IdEquipamentos = 0;
-   public static int GerarIdEquipamentos()
+    public static int GerarIdEquipamento()
     {
         IdEquipamentos++;
 
         return IdEquipamentos;
     }
-    public static int GerarIdChamados()
+
+    public static int GerarIdChamado()
     {
-        int idchamados = 0;
-        idchamados++;
+        IdChamados++;
 
-        return idchamados;
+        return IdChamados;
     }
-   
-
-
-    }
+}
