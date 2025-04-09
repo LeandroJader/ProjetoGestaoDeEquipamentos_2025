@@ -3,101 +3,80 @@ using ProjetoGestaoDeEquipamentos.ModuloChamado;
 using ProjetoGestaoDeEquipamentos.moduloEquipamentos;
 using ProjetoGestaoDeEquipamentos.ModuloFabricantes;
 
-namespace ProjetoGestaoDeEquipamentos
+namespace ProjetoGestaoDeEquipamentos;
+
+class Program
 {
-    class Program
+    static void Main(string[] args)
     {
-        static void Main(string[] args)
+        RepositorioFabricante repositorioFabricante = new RepositorioFabricante();
+        RepositorioEquipamento repositorioEquipamento = new RepositorioEquipamento();
+        RepositorioChamado repositorioChamado = new RepositorioChamado();
+
+        TelaFabricante telaFabricante = new TelaFabricante(repositorioFabricante);
+        TelaEquipamento telaEquipamento = new TelaEquipamento(repositorioEquipamento, repositorioFabricante);
+        TelaChamado telaChamado = new TelaChamado(repositorioChamado, repositorioEquipamento);
+
+        TelaPrincipal telaPrincipal = new TelaPrincipal();
+
+        while (true)
         {
+            char opcaoPrincipal = telaPrincipal.ApresentarMenuPrincipal();
 
-            TelaFabricante telafabricante = new TelaFabricante();
-
-            TelaEquipamento telaEquipamento = new TelaEquipamento();
-
-            RepositorioEquipamento repositorioEquipamento = telaEquipamento.repositorioEquipamento;
-
-            TelaChamado telaChamado = new TelaChamado(repositorioEquipamento);
-
-            TelaPrincipal telaPrincipal = new TelaPrincipal();
-
-
-
-
-
-            while (true)
+            if (opcaoPrincipal == '1')
             {
-                char opcaoPrincipal = telaPrincipal.ApresentarMenuPrincipal();
+                char opcaoEscolhida = telaFabricante.ApresentarMenu();
 
-
-
-                if (opcaoPrincipal == '1')
+                switch (opcaoEscolhida)
                 {
-                    char opcaoEscolhida = telafabricante.ApresentarMenu();
+                    case '1': telaFabricante.CadastrarFabricante(); break;
 
-                    switch (opcaoEscolhida)
-                    {
-                        case '1': telafabricante.CadastrarFabricante(); break;
+                    case '2': telaFabricante.EditarFabricante(); break;
 
-                        case '2': telafabricante.EditarFabricante(); break;
+                    case '3': telaFabricante.ExcluirFabricante(); break;
 
-                        case '3': telafabricante.ExcluirFabricante(); break;
+                    case '4': telaFabricante.VisualizarFabricantes(true); break;
 
-                        case '4': telafabricante.VizualizarFabricante(true); break;
-
-                        default: break;
-                    }
+                    default: break;
                 }
-
-
-
-
-
-                else if (opcaoPrincipal == '2')
-                {
-                    char opcaoEscolhida = telaEquipamento.ApresentarMenu();
-
-                    switch (opcaoEscolhida)
-                    {
-                        case '1': telaEquipamento.CadastrarEquipamento(); break;
-
-                        case '2': telaEquipamento.EditarEquipamento(); break;
-
-                        case '3': telaEquipamento.ExcluirEquipamento(); break;
-
-                        case '4': telaEquipamento.VisualizarEquipamentos(true); break;
-
-                        default: break;
-                    }
-                }
-
-                else if (opcaoPrincipal == '3')
-                {
-                    char opcaoEscolhida = telaChamado.ApresentarMenu();
-
-                    switch (opcaoEscolhida)
-                    {
-                        case '1': telaChamado.CadastrarChamado(); break;
-
-                        case '2': telaChamado.EditarChamado(); break;
-
-                        case '3': telaChamado.ExcluirChamado(); break;
-
-                        case '4': telaChamado.VisualizarChamados(true); break;
-
-                        default: break;
-                    }
-                }
-
-
-
-
-
-
-
-
-                Console.ReadLine();
             }
 
+            else if (opcaoPrincipal == '2')
+            {
+                char opcaoEscolhida = telaEquipamento.ApresentarMenu();
+
+                switch (opcaoEscolhida)
+                {
+                    case '1': telaEquipamento.CadastrarEquipamento(); break;
+
+                    case '2': telaEquipamento.EditarEquipamento(); break;
+
+                    case '3': telaEquipamento.ExcluirEquipamento(); break;
+
+                    case '4': telaEquipamento.VisualizarEquipamentos(true); break;
+
+                    default: break;
+                }
+            }
+
+            else if (opcaoPrincipal == '3')
+            {
+                char opcaoEscolhida = telaChamado.ApresentarMenu();
+
+                switch (opcaoEscolhida)
+                {
+                    case '1': telaChamado.CadastrarChamado(); break;
+
+                    case '2': telaChamado.EditarChamado(); break;
+
+                    case '3': telaChamado.ExcluirChamado(); break;
+
+                    case '4': telaChamado.VisualizarChamados(true); break;
+
+                    default: break;
+                }
+            }
         }
     }
 }
+    
